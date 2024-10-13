@@ -3,7 +3,7 @@ namespace TruckPlannerLib
 {
     using System.Linq;
     using TruckPlannerLib.Models;
-    public class DataRepository
+    public class DataRepository : IDataRepository
     {
         public IQueryable<TruckPlan> TruckPlans { get; set; }
 
