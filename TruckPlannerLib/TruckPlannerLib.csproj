@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\TruckPlannerLib.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -44,14 +45,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IDataRepository.cs" />
-    <Compile Include="DataRepository.cs" />
+    <Compile Include="DataRepository\ITruckPlannerRepository.cs" />
+    <Compile Include="DataRepository\TruckPlannerRepository.cs" />
     <Compile Include="Models\GpsLocationData.cs" />
+    <Compile Include="Models\ITruckPlannerDataStore.cs" />
     <Compile Include="Models\Truck.cs" />
     <Compile Include="Models\TruckDriver.cs" />
     <Compile Include="Models\TruckPlan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TruckingService.cs" />
     <Compile Include="Utils\CountryLookup.cs" />
     <Compile Include="Utils\DistanceCalculator.cs" />
   </ItemGroup>
