@@ -25,7 +25,7 @@ namespace TruckPlannerLib.Utils
             var response = await httpClient.GetStringAsync(query);
 
             var json = JObject.Parse(response);
-            var countryName = json["results"]?[0]?["components"]?["country"].ToString();
+            var countryName = json["results"]?[0]?["components"]?["country"]?.ToString();
 
             return countryName ?? "Unknown";
         }
