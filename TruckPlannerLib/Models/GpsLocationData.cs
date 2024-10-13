@@ -9,6 +9,11 @@ namespace TruckPlannerLib.Models
         /// <summary>
         /// 
         /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public int GpsDeviceId { get; set; }
         /// <summary>
         /// 

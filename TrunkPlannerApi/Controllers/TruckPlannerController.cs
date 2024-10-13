@@ -1,13 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TruckPlannerLib;
 
 namespace TrunkPlannerApi.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
     public class TruckPlannerController : ControllerBase
     {
 
+        private ITruckPlannerRepository _truckPlannerRepository;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="truckPlannerRepository"></param>
+        public TruckPlannerController(ITruckPlannerRepository truckPlannerRepository)
+        {
+            _truckPlannerRepository = truckPlannerRepository;
+        }
 
         /// <summary>
         /// Get total distance covered by various input parameters
@@ -28,7 +41,18 @@ namespace TrunkPlannerApi.Controllers
         [HttpGet("GetTotalDistanceByTruckPlan")]
         public IActionResult GetTotalDistanceByTruckPlan(int truckPlanId)
         {
-            return Ok(0);
+            return Ok(_truckPlannerRepository.GetTotalDistanceByTruckPlan(truckPlanId));
+        }
+
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetAllTruckPlans")]
+        public IActionResult GetAllTruckPlans()
+        {
+            return Ok(_truckPlannerRepository.GetAllTruckPlans());
         }
 
     }

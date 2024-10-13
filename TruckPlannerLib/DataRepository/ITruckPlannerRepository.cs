@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using TruckPlannerLib.Models;
 
 namespace TruckPlannerLib
 {
@@ -24,5 +26,12 @@ namespace TruckPlannerLib
         /// <param name="endDate"></param>
         /// <returns></returns>
         Task<double> GetTotalDistanceCoveredByDriverAgeInCountry(int driverAge, string country, DateTime startDate, DateTime endDate);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        List<TruckPlan> GetAllTruckPlans();
+    
     }
 }

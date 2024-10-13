@@ -1,6 +1,7 @@
 ﻿namespace TruckPlannerLib.DataRepository
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using TruckPlannerLib.Models;
@@ -43,6 +44,7 @@
             double totalDistance = 0;
             for (int counter = 1; counter < gpsLocationData.Length; counter++)
             {
+
                 totalDistance += Utils.DistanceCalculator.CalculateDistance(gpsLocationData[counter - 1], gpsLocationData[counter]);
             }
 
@@ -64,10 +66,12 @@
             var truckPlans = _dataStore.TruckPlans.Where(truckPlan => truckPlan.TruckDriver.Age == driverAge && truckPlan.StartDate >= startDate && truckPlan.StartDate <= endDate);
 
             GpsLocationData startGpsLocationData = null;
+            GpsLocationData endGpsLocationData = null;
+
             foreach (var truckPlan in truckPlans)
             {
                 startGpsLocationData = null;
-
+                endGpsLocationData = null;
                 //Get all GPS locations for a particular truck between given dates
                 var gpsLocations = _dataStore.GpsLocations.Where(gpsLocationItem => gpsLocationItem.Timestamp >= startDate && gpsLocationItem.Timestamp <= endDate && gpsLocationItem.GpsDeviceId == truckPlan.Truck.GpsDeviceId);
 
@@ -77,20 +81,30 @@
                     var countryByGps = await Utils.CountryLookup.GetCountryFromCoordinates(gpsLocation.Latitude, gpsLocation.Longitude);
                     if (string.Equals(countryByGps, country, StringComparison.OrdinalIgnoreCase))
                     {
-                        //In order to calculate distance, we need to have two coordinates
                         if (startGpsLocationData == null)
                         {
                             startGpsLocationData = gpsLocation;
                             continue;
                         }
-
-                        totalDistance += Utils.DistanceCalculator.CalculateDistance(startGpsLocationData, gpsLocation);
-                        startGpsLocationData = gpsLocation;
+                        endGpsLocationData = gpsLocation;
                     }
+                }
+                if (startGpsLocationData != null && endGpsLocationData != null)
+                {
+                    totalDistance += Utils.DistanceCalculator.CalculateDistance(startGpsLocationData, endGpsLocationData);
                 }
             }
 
             return totalDistance;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public List<TruckPlan> GetAllTruckPlans()
+        {
+            return _dataStore.TruckPlans.ToList();
         }
     }
 }
