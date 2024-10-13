@@ -24,7 +24,8 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "OPENCAGEDATA_KEY": "34cfb1448fe34452a8769286e010ed9c" //test key
       }
     }
   }

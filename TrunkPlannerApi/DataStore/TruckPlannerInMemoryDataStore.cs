@@ -12,13 +12,14 @@ namespace TrunkPlannerApi.DataStore
         /// </summary>
         public TruckPlannerInMemoryDataStore()
         {
+            //All the GPS locations are for Denmark
             GpsLocations = new List<GpsLocationData>
             {
                 new GpsLocationData
                 {
                     Id=1,
                     GpsDeviceId =1,
-                    Latitude =55.70359474538186,
+                    Latitude =55.70359474538186, 
                     Longitude= 12.595923797345852,
                     Timestamp = DateTime.Now.AddDays(-1).AddMinutes(-15),
                 },
@@ -91,7 +92,7 @@ namespace TrunkPlannerApi.DataStore
                 new TruckPlan 
                 {
                     TrunkPlanId = 1,
-                    StartDate = DateTime.Now.AddDays(-1),
+                    StartDate = DateTime.Now.AddDays(-1).AddHours(-1),
                     EndDate = DateTime.Now.AddDays(-1),
                     Truck=  Trucks.First(truck=> truck.TruckId==1),
                     TruckDriver = TruckDrivers.First(truckDriver => truckDriver.DriverId==1),
@@ -99,7 +100,7 @@ namespace TrunkPlannerApi.DataStore
                 new TruckPlan
                 {
                     TrunkPlanId = 2,
-                    StartDate = DateTime.Now.AddDays(-2),
+                    StartDate = DateTime.Now.AddDays(-2).AddHours(-1),
                     EndDate = DateTime.Now.AddDays(-2),
                     Truck=  Trucks.First(truck=> truck.TruckId==2),
                     TruckDriver = TruckDrivers.First(truckDriver => truckDriver.DriverId==2),

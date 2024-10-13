@@ -28,9 +28,20 @@ namespace TrunkPlannerApi.Controllers
         /// <remarks>Get inputs - driverAge, country, start of date range, end of date range</remarks>
         /// <response code="200">Total distance will be fetched a number will be returned</response>
         [HttpGet("GetTotalDistanceByDriverAndCountry")]
-        public IActionResult GetTotalDistanceByDriverAndCountry()
+        public async Task<IActionResult> GetTotalDistanceByDriverAndCountry(int driverAge, string country, DateTime startDate, DateTime endDate)
         {
-            return Ok(0);
+           
+            var apikey=  Environment.GetEnvironmentVariable(Properties.Resources.CountryLookUpVariableName);
+            double totalDistance;
+            try
+            {
+                totalDistance =await _truckPlannerRepository.GetTotalDistanceCoveredByDriverAgeInCountry(driverAge, country, startDate, endDate, apikey);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+            return Ok($"Total distance for country {country} driven by drivers over the age of {driverAge} is {totalDistance}");
         }
 
         /// <summary>
@@ -44,7 +55,7 @@ namespace TrunkPlannerApi.Controllers
             return Ok(_truckPlannerRepository.GetTotalDistanceByTruckPlan(truckPlanId));
         }
 
-        
+
         /// <summary>
         /// 
         /// </summary>

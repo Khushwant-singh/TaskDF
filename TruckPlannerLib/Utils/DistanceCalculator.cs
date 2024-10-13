@@ -3,10 +3,19 @@ namespace TruckPlannerLib.Utils
 {
     using System;
     using Models;
+    /// <summary>
+    /// 
+    /// </summary>
     public static class DistanceCalculator
     {
         private const double EarthRadiusKm = 6371.0;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startLocation"></param>
+        /// <param name="endLocation"></param>
+        /// <returns></returns>
         public static double CalculateDistance(GpsLocationData startLocation, GpsLocationData endLocation)
         {
             var lat1 = ToRadians(startLocation.Latitude);
@@ -25,6 +34,11 @@ namespace TruckPlannerLib.Utils
             return EarthRadiusKm * c;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="angle"></param>
+        /// <returns></returns>
         private static double ToRadians(double angle)
         {
             return angle * (Math.PI / 180.0);
