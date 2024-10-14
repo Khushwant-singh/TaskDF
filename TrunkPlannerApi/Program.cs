@@ -7,11 +7,9 @@ using TrunkPlannerApi.DataStore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Add repository using inmemory store
 //Repository using InMemoryStore
 builder.Services.AddSingleton<ITruckPlannerRepository>
                 (options => new TruckPlannerRepository(new TruckPlannerInMemoryDataStore()));
-// Add services to the container.
 
 //Json options to format the response
 builder.Services.AddControllers().AddJsonOptions(
@@ -24,7 +22,6 @@ builder.Services.AddControllers().AddJsonOptions(
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(swagger =>
 {

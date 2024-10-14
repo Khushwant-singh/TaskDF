@@ -23,19 +23,28 @@ namespace TrunkPlannerApi.Controllers
         }
 
         /// <summary>
+        /// Get all the available truck plans
+        /// </summary>
+        /// <returns>json response</returns>
+        [HttpGet("GetAllTruckPlans")]
+        public IActionResult GetAllTruckPlans()
+        {
+            return Ok(_truckPlannerRepository.GetAllTruckPlans());
+        }
+        /// <summary>
         /// Get total distance covered by various input parameters
         /// </summary>
         /// <remarks>Get inputs - driverAge, country, start of date range, end of date range</remarks>
-        /// <response code="200">Total distance will be fetched a number will be returned</response>
+        /// <response code="200">Total distance will be fetched and a number will be returned</response>
         [HttpGet("GetTotalDistanceByDriverAndCountry")]
         public async Task<IActionResult> GetTotalDistanceByDriverAndCountry(int driverAge, string country, DateTime startDate, DateTime endDate)
         {
-           
-            var apikey=  Environment.GetEnvironmentVariable(Properties.Resources.CountryLookUpVariableName);
+
+            var apikey = Environment.GetEnvironmentVariable(Properties.Resources.CountryLookUpVariableName);
             double totalDistance;
             try
             {
-                totalDistance =await _truckPlannerRepository.GetTotalDistanceCoveredByDriverAgeInCountry(driverAge, country, startDate, endDate, apikey);
+                totalDistance = await _truckPlannerRepository.GetTotalDistanceCoveredByDriverAgeInCountry(driverAge, country, startDate, endDate, apikey);
             }
             catch (Exception ex)
             {
@@ -52,19 +61,14 @@ namespace TrunkPlannerApi.Controllers
         [HttpGet("GetTotalDistanceByTruckPlan")]
         public IActionResult GetTotalDistanceByTruckPlan(int truckPlanId)
         {
-            return Ok(_truckPlannerRepository.GetTotalDistanceByTruckPlan(truckPlanId));
+            try
+            {
+                return Ok(_truckPlannerRepository.GetTotalDistanceByTruckPlan(truckPlanId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("GetAllTruckPlans")]
-        public IActionResult GetAllTruckPlans()
-        {
-            return Ok(_truckPlannerRepository.GetAllTruckPlans());
-        }
-
     }
 }

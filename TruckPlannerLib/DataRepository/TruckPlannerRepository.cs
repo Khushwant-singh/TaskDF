@@ -44,8 +44,8 @@
                 totalDistance = Utils.DistanceCalculator.CalculateDistance(startGpsLocationData, endGpsLocationData);
            */
             
-            //If we want to know the real distance a Truck has travelled, then we need to go through each of the GPS location
-            var gpsLocationData = _dataStore.GpsLocations.Where(gpsItem => gpsItem.GpsDeviceId == truckPlan.Truck.GpsDeviceId
+            //If we want to know the real distance following the exact Route a Truck has travelled, then we need to go through each of the GPS location
+            var gpsLocationData = _dataStore.GpsLocations.Where(gpsItem => gpsItem.Truck.TruckId == truckPlan.Truck.TruckId
            && gpsItem.Timestamp >= truckPlan.StartDate && gpsItem.Timestamp <= truckPlan.EndDate).ToArray();
             totalDistance = 0;
             for (int counter = 1; counter < gpsLocationData.Length; counter++)
@@ -58,7 +58,7 @@
 
 
         /// <summary>
-        /// Get Total distance convered by Truck drivers elder than given age and for a particular country within given date range
+        /// Get Total distance covered by Truck drivers greater than equal to the given age and for a particular country within the given date range
         /// </summary>
         /// <param name="driverAge">The age of the driver</param>
         /// <param name="country">Country travelled by the drivers</param>
@@ -69,7 +69,7 @@
         public async Task<double> GetTotalDistanceCoveredByDriverAgeInCountry(int driverAge, string country, DateTime startDate, DateTime endDate, string apiKey)
         {
             double totalDistance = 0;
-            var truckPlans = _dataStore.TruckPlans.Where(truckPlan => truckPlan.TruckDriver.Age == driverAge && truckPlan.StartDate >= startDate && truckPlan.StartDate <= endDate);
+            var truckPlans = _dataStore.TruckPlans.Where(truckPlan => truckPlan.TruckDriver.Age >= driverAge && truckPlan.StartDate >= startDate && truckPlan.StartDate <= endDate);
 
             GpsLocationData startGpsLocationData = null;
             //GpsLocationData endGpsLocationData = null;
@@ -79,7 +79,7 @@
                 startGpsLocationData = null;
                 //endGpsLocationData = null;
                 
-                var gpsLocations = _dataStore.GpsLocations.Where(gpsLocationItem => gpsLocationItem.Timestamp >= startDate && gpsLocationItem.Timestamp <= endDate.AddDays(1).AddSeconds(-1) && gpsLocationItem.GpsDeviceId == truckPlan.Truck.GpsDeviceId);
+                var gpsLocations = _dataStore.GpsLocations.Where(gpsLocationItem => gpsLocationItem.Timestamp >= startDate && gpsLocationItem.Timestamp <= endDate.AddDays(1).AddSeconds(-1) && gpsLocationItem.Truck.TruckId== truckPlan.Truck.TruckId);
 
                 foreach (var gpsLocation in gpsLocations)
                 {

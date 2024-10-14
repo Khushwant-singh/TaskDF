@@ -12,6 +12,6 @@
         /// <summary>
         /// 
         /// </summary>
-        public int GpsDeviceId { get; set; }
+        //public int GpsDeviceId { get; set; }
     }
 }
